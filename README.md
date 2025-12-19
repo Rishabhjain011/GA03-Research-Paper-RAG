@@ -1,12 +1,9 @@
 # GA03: Research Paper Management & Analysis Intelligence System
 
 ## 📌 Overview
-This project implements a Research Paper Intelligence System that helps users
-ingest academic research papers, generate semantic embeddings, and perform
-semantic search using Retrieval-Augmented Generation (RAG) principles.
+This project implements a Research Paper Intelligence System that helps users ingest academic research papers, generate semantic embeddings, and perform semantic search using Retrieval-Augmented Generation (RAG) principles.
 
-The system is designed to handle long-form academic PDFs and enable efficient
-discovery of relevant content without reading the entire paper.
+The system is designed to handle long-form academic PDFs and enable efficient discovery of relevant content without reading the entire paper.
 
 ---
 
@@ -20,79 +17,74 @@ discovery of relevant content without reading the entire paper.
 ---
 
 ## 🧱 Project Architecture
-PDF
-↓
-Document Processing
-↓
-Chunking
-↓
-HuggingFace Embeddings
-↓
-FAISS Vector Store
-↓
-Semantic Search
 
+```mermaid
+graph TD
+    PDF[📄 PDF Document] -->|PyMuPDF| DP(Document Processing)
+    DP -->|Recursive Split| CH[Chunking]
+    CH -->|Sentence-Transformers| EMB[HuggingFace Embeddings]
+    EMB -->|Index Vectors| VS[(FAISS Vector Store)]
+    VS -->|Retrieval| SS[Semantic Search]
 
----
+```
 
 ## 🛠 Tech Stack
-- Python
-- LangChain
-- HuggingFace Sentence Transformers
-- FAISS
-- PyMuPDF
-- uv (virtual environment & dependency management)
+Language: Python
 
----
+Orchestration: LangChain
+
+Embeddings: HuggingFace Sentence Transformers
+
+Vector DB: FAISS
+
+Parsing: PyMuPDF
+
+Package Manager: uv (virtual environment & dependency management)
 
 ## 📂 Project Structure
-
 GA03-Research-Paper-RAG/
 │
 ├── config/
-│ └── settings.py
+│   └── settings.py
 │
 ├── core/
-│ ├── document_processor.py
-│ ├── embeddings.py
-│ ├── vector_store.py
-│ └── schema.py
+│   ├── document_processor.py
+│   ├── embeddings.py
+│   ├── vector_store.py
+│   └── schema.py
 │
 ├── data/
-│ ├── papers/
-│ └── vectorstore/
+│   ├── papers/
+│   └── vectorstore/
 │
 ├── ingest.py
 ├── main.py
 ├── requirements.txt
 └── README.md
 
-
----
-
 ## ⚙️ Setup Instructions
-
 ### 1️⃣ Clone the Repository
-```bash
-git clone <https://github.com/Rishabhjain011>
+
+git clone [https://github.com/Rishabhjain011/GA03-Research-Paper-RAG.git](https://github.com/Rishabhjain011/GA03-Research-Paper-RAG.git)
 cd GA03-Research-Paper-RAG
-2️⃣ Create Virtual Environment (using uv)
+
+### 2️⃣ Create Virtual Environment (using uv)
 
 pip install uv
 uv venv
 
-Activate the environment:
-Windows
-
+# Activate the environment:
+# Windows
 .venv\Scripts\activate
+# Mac/Linux
+source .venv/bin/activate
 
-3️⃣ Install Dependencies
+### 3️⃣ Install Dependencies
 
 uv pip install -r requirements.txt
 
-4️⃣ Environment Variables
-
-Create a .env file in the project root:
+### 4️⃣ Environment Variables
+Create a .env file in the project root: 
 GROQ_API_KEY=your_groq_api_key
 HUGGINGFACE_API_KEY=your_huggingface_api_key
 LLM_MODEL=llama3-70b-8192
@@ -103,81 +95,68 @@ CHUNK_OVERLAP=200
 FAISS_INDEX_PATH=data/vectorstore/faiss
 TOP_K_RESULTS=5
 
-⚠️ Note:
-.env is excluded from Git for security reasons.
+# ⚠️ Note: .env is excluded from Git for security reasons.
 
----
----
 ## ▶️ How to Run the Project
-
 ### 📥 Ingest a Research Paper
-1.Place a PDF file inside:
-data/papers/
+Place a PDF file inside: data/papers/
 
-2.Run ingestion:
+Run ingestion:
 
 uv run python ingest.py
 
-
 This will:
 
-1.Load the PDF
+Load the PDF
 
-2.Chunk the text
+Chunk the text
 
-3.Generate embeddings
+Generate embeddings
 
-4.Store vectors in FAISS
+Store vectors in FAISS
 
+### 🔍 Perform Semantic Search
+Run the main script to query your document:
+uv run python main.py
 
-Perform  semantic search
+### 🧪 Example Queries:
+"What problem does the paper address?"
 
-uc run python main.py
+"What methodology is proposed?"
 
+"What are the key findings?"
 
-🧪 Example Queries
+"What experiments were conducted?"
 
-What problem does the paper address?
+## 🔐 Security & Best Practices
+API keys are managed using environment variables.
 
-What methodology is proposed?
+.env, .venv, and generated vector stores are excluded from version control.
 
-What are the key findings?
+Repository contains only clean, reproducible source code.
 
-What experiments were conducted?
+## 🚧 Current Limitations
+Supports single-paper ingestion.
 
-🔐 Security & Best Practices
+Basic metadata extraction.
 
-API keys are managed using environment variables
+No citation graph analysis.
 
-.env, .venv, and generated vector stores are excluded from version control
+No UI (CLI-based interaction only).
 
-Repository contains only clean, reproducible source code
+## 🚀 Future Enhancements
+[ ] Multi-paper ingestion
 
-🚧 Current Limitations
+[ ] Citation and reference analysis
 
-Supports single-paper ingestion
+[ ] RAG-based answer generation using LLMs
 
-Basic metadata extraction
+[ ] Streamlit-based user interface
 
-No citation graph analysis
+[ ] Research trend analysis across multiple papers
 
-No UI (CLI-based interaction)
-
-🚀 Future Enhancements
-
-Multi-paper ingestion
-
-Citation and reference analysis
-
-RAG-based answer generation using LLMs
-
-Streamlit-based user interface
-
-Research trend analysis across multiple papers
-
-🎓 Conclusion
-
+## 🎓 Conclusion
 This project demonstrates a complete end-to-end Research Paper Intelligence System using modern RAG techniques, vector databases, and secure engineering practices. It showcases how AI can significantly improve academic research workflows by enabling fast and intelligent access to information.
 
 
-video explanation link :-https://drive.google.com/file/d/1844qazCpO4v4EqWjMtMjMCs1eISMWuds/view?usp=drive_link
+Explanation video link :- https://drive.google.com/file/d/1844qazCpO4v4EqWjMtMjMCs1eISMWuds/view?usp=drive_link
